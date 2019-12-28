@@ -1,0 +1,20 @@
+[comments]
+str1=
+str2=
+styles_cmt=Comment
+styles_str=String
+
+[map]
+Id.types=Id2
+Id.constans=Id4
+Id.func=Id1
+Id.built_in_variables=IdVar
+Id.keyword.declaration=IdKeyword
+Id.keyword.control=Id3
+Id.keyword.modifier=String3
+Id.keyword.other=String2
+String=String
+Symbol=Symbol
+Comment=Comment
+Number=Number
+Marked block=-
