@@ -1,4 +1,4 @@
-object SyntAnal52: TLibSyntAnalyzer
+object SyntAnal53: TLibSyntAnalyzer
   Formats = <
     item
       DisplayName = 'Id.types'
@@ -135,7 +135,7 @@ object SyntAnal52: TLibSyntAnalyzer
       DisplayName = 'Comment.2'
       StyleName = 'Comment'
       TokenType = 3
-      Expression = '//.*'
+      Expression = '(//|--).*'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -847,6 +847,8 @@ object SyntAnal52: TLibSyntAnalyzer
     'String')
   Extentions = 'e'
   LexerName = 'Specman'
+  Notes.Strings = (
+    'By Oleh Lutsak, https://github.com/OlehL')
   LineComment = '//'
   AlwaysSyncBlockAnal = True
   Charset = DEFAULT_CHARSET
