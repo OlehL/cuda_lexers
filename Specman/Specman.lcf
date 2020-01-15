@@ -1,4 +1,4 @@
-object SyntAnal53: TLibSyntAnalyzer
+object SyntAnal54: TLibSyntAnalyzer
   Formats = <
     item
       DisplayName = 'Number'
@@ -151,7 +151,7 @@ object SyntAnal53: TLibSyntAnalyzer
       DisplayName = 'Int bin'
       StyleName = 'Number'
       TokenType = 2
-      Expression = '\b(\d+'#39'b|0b)[0-1][_0-1]+\b'
+      Expression = '\b(\d+'#39'b|0b)[0-1][_0-1]*\b'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -159,7 +159,7 @@ object SyntAnal53: TLibSyntAnalyzer
       DisplayName = 'Int oct'
       StyleName = 'Number'
       TokenType = 2
-      Expression = '\b(\d+'#39'o|0o)[0-7][_0-7]+\b'
+      Expression = '\b(\d+'#39'o|0o)[0-7][_0-7]*\b'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -167,7 +167,7 @@ object SyntAnal53: TLibSyntAnalyzer
       DisplayName = 'Int hex'
       StyleName = 'Number'
       TokenType = 2
-      Expression = '\b(\d+'#39'x|\d+'#39'h|0x)[0-9a-f][_0-9a-f]+\b'
+      Expression = '\b(\d+'#39'x|\d+'#39'h|0x)[0-9a-f][_0-9a-f]*\b'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -871,7 +871,8 @@ object SyntAnal53: TLibSyntAnalyzer
     '8'#39'b11001010'
     ' 6'#39'o45  '
     '  16'#39'd63453 '
-    '   32'#39'X12ffab04'
+    '   32'#39'X12ffab04  '
+    '     var s: string := l1.apply(it > 127 ? 1'#39'b1 : 1'#39'b0);'
     #39'>'
     'fgdgrgsf'
     'jsrt')
