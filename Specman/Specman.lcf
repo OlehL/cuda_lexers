@@ -1,5 +1,13 @@
-object SyntAnal52: TLibSyntAnalyzer
+object SyntAnal54: TLibSyntAnalyzer
   Formats = <
+    item
+      DisplayName = 'Number'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
     item
       DisplayName = 'Id.types'
       Font.Charset = DEFAULT_CHARSET
@@ -65,6 +73,14 @@ object SyntAnal52: TLibSyntAnalyzer
       Font.Style = []
     end
     item
+      DisplayName = 'Id.keyword.preprocessor_directives'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clLime
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+    end
+    item
       DisplayName = 'String'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clTeal
@@ -87,14 +103,6 @@ object SyntAnal52: TLibSyntAnalyzer
       Font.Height = -13
       Font.Name = 'Courier New'
       Font.Style = [fsItalic]
-    end
-    item
-      DisplayName = 'Number'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -13
-      Font.Name = 'Courier New'
-      Font.Style = []
     end
     item
       DisplayName = 'Marked block'
@@ -135,7 +143,7 @@ object SyntAnal52: TLibSyntAnalyzer
       DisplayName = 'Comment.2'
       StyleName = 'Comment'
       TokenType = 3
-      Expression = '//.*'
+      Expression = '(//|--).*'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -148,6 +156,44 @@ object SyntAnal52: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
+      DisplayName = 'Int bin'
+      StyleName = 'Number'
+      TokenType = 2
+      Expression = '\b(\d+'#39'b|0b)[0-1][_0-1]*\b'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Int oct'
+      StyleName = 'Number'
+      TokenType = 2
+      Expression = '\b(\d+'#39'o|0o)[0-7][_0-7]*\b'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Int hex'
+      StyleName = 'Number'
+      TokenType = 2
+      Expression = '\b(\d+'#39'x|\d+'#39'h|0x)[0-9a-f][_0-9a-f]*\b'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Id.Keyword.Special'
+      TokenType = 1
+      Expression = 'DPI-C'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Id'
+      TokenType = 1
+      Expression = '\#?[a-z_][a-z0-9_]*'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
       DisplayName = 'Float'
       StyleName = 'Number'
       TokenType = 2
@@ -156,17 +202,10 @@ object SyntAnal52: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
-      DisplayName = 'Integer'
+      DisplayName = 'Int'
       StyleName = 'Number'
       TokenType = 2
-      Expression = '\d+'
-      ColumnFrom = 0
-      ColumnTo = 0
-    end
-    item
-      DisplayName = 'Id'
-      TokenType = 1
-      Expression = '[a-z\-_]\w*'
+      Expression = '(\d+'#39'd)?\d[_0-9]*(k|K|m|M)?'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -246,6 +285,23 @@ object SyntAnal52: TLibSyntAnalyzer
           TokenTypes = 1
         end>
       HighlightPos = cpBound
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Id.keyword.preprocessor_directives'
+      StyleName = 'Id.keyword.preprocessor_directives'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '#define'
+            '#else'
+            '#ifdef'
+            '#ifndef'
+            '#undef')
+          TokenTypes = 2
+        end>
+      HighlightPos = cpAny
       IgnoreAsParent = False
     end
     item
@@ -772,7 +828,8 @@ object SyntAnal52: TLibSyntAnalyzer
     '}'
     ''
     '<'#39
-    ''
+    ' export DPI-C verifier.e_impl();'
+    'export DPI-C verifier.e_impl();'
     '// 99 Bottles of beer'
     '// By Thorsten Dworzak'
     ''
@@ -834,11 +891,24 @@ object SyntAnal52: TLibSyntAnalyzer
     '<'#39
     '  extend bla_s {'
     ''
-    '  };'
-    ''
+    '  };  '
+    '12'
+    '55_32'
+    '-764'
+    '0b100111,'
+    '0b1100_0101'
+    '0xff,'
+    '0x99_aa_bb_cc'
+    '32K, 32k, 128k'
+    '1m, 4m, 4M'
+    '8'#39'b11001010'
+    ' 6'#39'o45  '
+    '  16'#39'd63453 '
+    '   32'#39'X12ffab04  '
+    '     var s: string := l1.apply(it > 127 ? 1'#39'b1 : 1'#39'b0);'
     #39'>'
-    'fgdgrgsf'
-    'jsrt')
+    ''
+    '')
   TokenTypeNames.Strings = (
     'Symbol'
     'Id'
@@ -847,6 +917,8 @@ object SyntAnal52: TLibSyntAnalyzer
     'String')
   Extentions = 'e'
   LexerName = 'Specman'
+  Notes.Strings = (
+    'By Oleh Lutsak, https://github.com/OlehL')
   LineComment = '//'
   AlwaysSyncBlockAnal = True
   Charset = DEFAULT_CHARSET
