@@ -71,6 +71,16 @@ object SyntAnal5: TLibSyntAnalyzer
       Font.Height = -13
       Font.Name = 'Courier New'
       Font.Style = []
+    end
+    item
+      DisplayName = 'Marked block'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+      BgColor = clHighlight
+      FormatType = ftColor
     end>
   TokenRules = <
     item
@@ -78,6 +88,22 @@ object SyntAnal5: TLibSyntAnalyzer
       StyleName = 'Comment'
       TokenType = 1
       Expression = '//.*'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Func'
+      StyleName = 'Id.func'
+      TokenType = 5
+      Expression = '^[\x20\x09]*(public[\x20\x09]*)?function'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Type'
+      StyleName = 'Id.keyword.other'
+      TokenType = 6
+      Expression = '^[\x20\x09]*type'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -90,27 +116,26 @@ object SyntAnal5: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
-      DisplayName = 'Number'
+      DisplayName = 'Int hex'
       StyleName = 'Number'
       TokenType = 4
-      Expression = '\b(-)?[0-9.]+\b'
+      Expression = '\b0x[_0-9a-f]+\b'
       ColumnFrom = 0
       ColumnTo = 0
     end
     item
       DisplayName = 'Float'
-      Enabled = False
       StyleName = 'Number'
       TokenType = 4
-      Expression = '\d+ (\.\d+)? e [\+\-]? \d+ |'#13#10'\d+ \. \d+'
+      Expression = '\d+ (\.\d+)? e [\+\-]? \d+ |'#13#10'\d+ \. \d+f?'
       ColumnFrom = 0
       ColumnTo = 0
     end
     item
-      DisplayName = 'Integer'
-      Enabled = False
+      DisplayName = 'Int'
+      StyleName = 'Number'
       TokenType = 4
-      Expression = '\d+'
+      Expression = '\d+d?'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -175,6 +200,30 @@ object SyntAnal5: TLibSyntAnalyzer
       IgnoreAsParent = False
     end
     item
+      DisplayName = 'Func'
+      ConditionList = <
+        item
+          TokenTypes = 32
+        end>
+      NameFmt = '%s-1'
+      HighlightPos = cpBound
+      NoEndRule = True
+      TreeItemImage = 5
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Type'
+      ConditionList = <
+        item
+          TokenTypes = 64
+        end>
+      NameFmt = '%s-1'
+      HighlightPos = cpAny
+      NoEndRule = True
+      TreeItemImage = 2
+      IgnoreAsParent = False
+    end
+    item
       DisplayName = 'Id.types'
       StyleName = 'Id.types'
       BlockType = btTagDetect
@@ -182,21 +231,29 @@ object SyntAnal5: TLibSyntAnalyzer
         item
           TagList.Strings = (
             'any'
-            'blob'
+            'anydata'
+            'array'
             'boolean'
             'byte'
-            'datatable'
+            'decimal'
             'error'
-            'exception'
             'float'
             'handle'
             'int'
             'json'
             'map'
+            'nil'
+            'object'
+            'optional'
+            'record'
+            'service'
+            'singleton'
             'string'
-            'var'
-            'xml'
-            'xmlns')
+            'table'
+            'tuple'
+            'typedesc'
+            'union'
+            'XML')
           TokenTypes = 1
         end>
       HighlightPos = cpAny
@@ -307,13 +364,6 @@ object SyntAnal5: TLibSyntAnalyzer
         end>
       HighlightPos = cpAny
       IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'Tag block rule 1'
-      Enabled = False
-      ConditionList = <>
-      HighlightPos = cpAny
-      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
@@ -397,7 +447,9 @@ object SyntAnal5: TLibSyntAnalyzer
     'Comment'
     'Symbol'
     'String'
-    'Number')
+    'Number'
+    'Func'
+    'Type')
   Extentions = 'bal'
   LexerName = 'Ballerina'
   ParseEndOfLine = True
