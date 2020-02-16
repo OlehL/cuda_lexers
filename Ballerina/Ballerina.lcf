@@ -92,22 +92,6 @@ object SyntAnal3: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
-      DisplayName = 'Func'
-      StyleName = 'Id.func'
-      TokenType = 5
-      Expression = '^[\x20\x09]*(public[\x20\x09]*)?function'
-      ColumnFrom = 0
-      ColumnTo = 0
-    end
-    item
-      DisplayName = 'Type'
-      StyleName = 'Id.keyword.other'
-      TokenType = 6
-      Expression = '^[\x20\x09]*type'
-      ColumnFrom = 0
-      ColumnTo = 0
-    end
-    item
       DisplayName = 'String'
       StyleName = 'String'
       TokenType = 3
@@ -209,7 +193,6 @@ object SyntAnal3: TLibSyntAnalyzer
       IgnoreAsParent = False
     end
     item
-<<<<<<< HEAD
       DisplayName = 'Type'
       ConditionList = <
         item
@@ -234,29 +217,6 @@ object SyntAnal3: TLibSyntAnalyzer
       NameFmt = '%s-1'
       HighlightPos = cpBound
       TreeItemImage = 5
-=======
-      DisplayName = 'Func'
-      ConditionList = <
-        item
-          TokenTypes = 32
-        end>
-      NameFmt = '%s-1'
-      HighlightPos = cpBound
-      NoEndRule = True
-      TreeItemImage = 5
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'Type'
-      ConditionList = <
-        item
-          TokenTypes = 64
-        end>
-      NameFmt = '%s-1'
-      HighlightPos = cpAny
-      NoEndRule = True
-      TreeItemImage = 2
->>>>>>> b06d6eb239846f7b32257b662c0dabedad83cd3b
       IgnoreAsParent = False
     end
     item
@@ -269,17 +229,13 @@ object SyntAnal3: TLibSyntAnalyzer
             'any'
             'anydata'
             'array'
-<<<<<<< HEAD
             'blob'
             'boolean'
             'byte'
             'datatable'
-=======
-            'boolean'
-            'byte'
->>>>>>> b06d6eb239846f7b32257b662c0dabedad83cd3b
             'decimal'
             'error'
+            'exception'
             'float'
             'function'
             'future'
@@ -298,13 +254,9 @@ object SyntAnal3: TLibSyntAnalyzer
             'tuple'
             'typedesc'
             'union'
-<<<<<<< HEAD
             'var'
             'xml'
             'xmlns')
-=======
-            'XML')
->>>>>>> b06d6eb239846f7b32257b662c0dabedad83cd3b
           TokenTypes = 1
         end>
       HighlightPos = cpAny
@@ -329,53 +281,8 @@ object SyntAnal3: TLibSyntAnalyzer
       IgnoreAsParent = False
     end
     item
-      DisplayName = 'Id.keyword.control'
+      DisplayName = 'Id.keyword'
       StyleName = 'Id.keyword'
-      BlockType = btTagDetect
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'abort'
-            'aborted'
-            'all'
-            'bind'
-            'break'
-            'catch'
-            'committed'
-            'enum'
-            'failed'
-            'finally'
-            'foreach'
-            'fork'
-            'import'
-            'in'
-            'is'
-            'iterator'
-            'join'
-            'lengthof'
-            'match'
-            'next'
-            'panic'
-            'retries'
-            'return'
-            'returns'
-            'some'
-            'throw'
-            'timeout'
-            'transaction'
-            'try'
-            'typeof'
-            'var'
-            'while'
-            'with')
-          TokenTypes = 1
-        end>
-      HighlightPos = cpAny
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'Id.keyword.other'
-      StyleName = 'Id.keyword.other'
       BlockType = btTagDetect
       ConditionList = <
         item
@@ -407,14 +314,47 @@ object SyntAnal3: TLibSyntAnalyzer
       IgnoreAsParent = False
     end
     item
-      DisplayName = 'Id.keyword.modifier'
-      StyleName = 'Id.keyword'
+      DisplayName = 'Id.keyword.other'
+      StyleName = 'Id.keyword.other'
       BlockType = btTagDetect
       ConditionList = <
         item
           TagList.Strings = (
+            'abort'
+            'aborted'
+            'all'
+            'bind'
+            'break'
+            'catch'
+            'committed'
             'else'
-            'if')
+            'enum'
+            'failed'
+            'finally'
+            'foreach'
+            'fork'
+            'if'
+            'import'
+            'in'
+            'is'
+            'iterator'
+            'join'
+            'lengthof'
+            'match'
+            'next'
+            'panic'
+            'retries'
+            'return'
+            'returns'
+            'some'
+            'throw'
+            'timeout'
+            'transaction'
+            'try'
+            'typeof'
+            'var'
+            'while'
+            'with')
           TokenTypes = 1
         end>
       HighlightPos = cpAny
@@ -504,13 +444,9 @@ object SyntAnal3: TLibSyntAnalyzer
     'String'
     'Number'
     'Func'
-<<<<<<< HEAD
     'Type'
     'Annotation'
     'QIdentifer')
-=======
-    'Type')
->>>>>>> b06d6eb239846f7b32257b662c0dabedad83cd3b
   Extentions = 'bal'
   LexerName = 'Ballerina'
   Notes.Strings = (
