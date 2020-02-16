@@ -14,4 +14,8 @@ String=String
 Symbol=Symbol
 Comment=Comment
 Number=Number
+<<<<<<< HEAD
 Marked block=-
+=======
+Marked block=-
+>>>>>>> b06d6eb239846f7b32257b662c0dabedad83cd3b
