@@ -41,6 +41,14 @@ object SyntAnal3: TLibSyntAnalyzer
       Font.Style = []
     end
     item
+      DisplayName = 'Id.modifier'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clPurple
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
+    item
       DisplayName = 'String'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clTeal
@@ -359,6 +367,21 @@ object SyntAnal3: TLibSyntAnalyzer
             'var'
             'while'
             'with')
+          TokenTypes = 1
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Id.modifier'
+      StyleName = 'Id.modifier'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'abstract'
+            'private'
+            'public')
           TokenTypes = 1
         end>
       HighlightPos = cpAny
