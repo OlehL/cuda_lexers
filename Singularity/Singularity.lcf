@@ -37,14 +37,14 @@ object SyntAnal34: TLibSyntAnalyzer
       DisplayName = 'Id.Header'
       StyleName = 'Id.Header'
       TokenType = 1
-      Expression = '^[\x20\x09]*\w+[^:]'
+      Expression = '^[\x20\x09]*\b\w+[^:]\b'
       ColumnFrom = 0
       ColumnTo = 0
     end
     item
       DisplayName = 'Id.Section'
       TokenType = 2
-      Expression = '^%[a-z_]\w*'
+      Expression = '^%\b[a-z_]\w*\b'
       ColumnFrom = 0
       ColumnTo = 0
     end>
@@ -108,8 +108,8 @@ object SyntAnal34: TLibSyntAnalyzer
       BlockName = 'Section'
       StartExpression = '.*'
       EndExpression = 
-        '^%(files|labels|help|environment|post|runscript|setup|startscrip' +
-        't|test)'
+        '^%\b(files|labels|help|environment|post|runscript|setup|startscr' +
+        'ipt|test)\b'
       SyntAnalyzer = SyntAnal4
     end>
   SampleText.Strings = (
