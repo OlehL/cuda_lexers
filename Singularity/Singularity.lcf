@@ -24,6 +24,16 @@ object SyntAnal34: TLibSyntAnalyzer
       Font.Height = -13
       Font.Name = 'Courier New'
       Font.Style = [fsBold]
+    end
+    item
+      DisplayName = 'Marked block'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+      BgColor = clHighlight
+      FormatType = ftColor
     end>
   TokenRules = <
     item
@@ -37,14 +47,15 @@ object SyntAnal34: TLibSyntAnalyzer
       DisplayName = 'Id.Header'
       StyleName = 'Id.Header'
       TokenType = 1
-      Expression = '^[\x20\x09]*\b\w+[^:]\b'
+      Expression = '^[\x20\x09]*\w+[^:]'
       ColumnFrom = 0
       ColumnTo = 0
     end
     item
-      DisplayName = 'Id.Section'
+      DisplayName = '1Id.Section'
+      StyleName = 'Id.Section'
       TokenType = 2
-      Expression = '^%\b[a-z_]\w*\b'
+      Expression = '^%\w+'
       ColumnFrom = 0
       ColumnTo = 0
     end>
@@ -71,33 +82,16 @@ object SyntAnal34: TLibSyntAnalyzer
       IgnoreAsParent = False
     end
     item
-      DisplayName = 'Id.Section'
-      StyleName = 'Id.Section'
-      BlockType = btTagDetect
-      ConditionList = <
-        item
-          TagList.Strings = (
-            '%environment'
-            '%files'
-            '%help'
-            '%labels'
-            '%post'
-            '%runscript'
-            '%setup'
-            '%startscript'
-            '%test')
-          TokenTypes = 4
-        end>
-      HighlightPos = cpAny
-      IgnoreAsParent = False
-    end
-    item
       DisplayName = 'Section'
       ConditionList = <
         item
           TokenTypes = 4
         end>
+      EndOfTextClose = True
+      NameFmt = '%sz0'
       HighlightPos = cpAny
+      GroupIndex = 20
+      CollapseFmt = '%s0'
       SelfClose = True
       IgnoreAsParent = False
     end>
@@ -106,11 +100,12 @@ object SyntAnal34: TLibSyntAnalyzer
     item
       DisplayName = 'Bash'
       BlockName = 'Section'
-      StartExpression = '.*'
+      StartExpression = '^[\x20\x09]+'
       EndExpression = 
-        '^%\b(files|labels|help|environment|post|runscript|setup|startscr' +
-        'ipt|test)\b'
+        '^\%(files|labels|help|environment|post|runscript|setup|startscri' +
+        'pt|test)\b'
       SyntAnalyzer = SyntAnal4
+      ToTextEnd = True
     end>
   SampleText.Strings = (
     '# SYNTAX TEST "Singularity.sublime-syntax"'
@@ -121,19 +116,19 @@ object SyntAnal34: TLibSyntAnalyzer
     'Stage: build'
     ''
     '%setup'
-    '# <- source.singularity keyword.control.singularity.section'
     '    touch /file1'
     '    # <- source.shell.bash'
     '    touch ${SINGULARITY_ROOTFS}/file2'
     '%files'
     '    /file1'
-    '    /file1 /opt'
+    '    /file1 /opt '
     ''
     '%environment'
     '    export LISTEN_PORT=12345'
     '    export LC_ALL=C'
     ''
     '%post'
+    '    NOW=`date`'
     '    apt-get update && apt-get install -y netcat'
     '    NOW=`date`'
     '    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT'
@@ -167,9 +162,11 @@ object SyntAnal34: TLibSyntAnalyzer
   TokenTypeNames.Strings = (
     'Comment'
     'Id.Header'
-    'Id.Section')
+    '1Id.Section')
   Extentions = 'Singularity'
   LexerName = 'Singularity'
+  SkipSpaces = False
+  FullRefreshSize = 2000
   Notes.Strings = (
     'By Oleh Lutsak, https://github.com/OlehL')
   ParseEndOfLine = True
