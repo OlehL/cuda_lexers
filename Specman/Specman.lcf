@@ -858,6 +858,19 @@ object SyntAnal35: TLibSyntAnalyzer
       NoEndRule = True
       TreeItemImage = 5
       IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.extend'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'extend')
+          TokenTypes = 2
+        end>
+      NameFmt = '%sl-1'
+      HighlightPos = cpAny
+      NoEndRule = True
+      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
