@@ -842,6 +842,19 @@ object SyntAnal35: TLibSyntAnalyzer
       HighlightPos = cpAny
       TreeItemImage = 4
       IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.define'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'define')
+          TokenTypes = 2
+        end>
+      NameFmt = '%sl-6'
+      HighlightPos = cpAny
+      TreeItemImage = 5
+      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
@@ -1033,6 +1046,13 @@ object SyntAnal35: TLibSyntAnalyzer
     ''
     '            payload.add(p_last);'
     '        };'
+    '    };'
+    '};'
+    ''
+    ''
+    'define <repeat_n'#39'statement> "repeat(<exp>) <block>" as {'
+    '    for i<?> from 0 to ((<exp>)-1) {'
+    '        <block>'
     '    };'
     '};')
   TokenTypeNames.Strings = (
