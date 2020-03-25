@@ -759,7 +759,7 @@ object SyntAnal35: TLibSyntAnalyzer
     end
     item
       DisplayName = 'Id.keyword.declaration'
-      StyleName = 'Id.keyword.control'
+      StyleName = 'Id.keyword.declaration'
       BlockType = btTagDetect
       ConditionList = <
         item
