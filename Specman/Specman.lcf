@@ -829,6 +829,19 @@ object SyntAnal35: TLibSyntAnalyzer
       HighlightPos = cpBound
       TreeItemImage = 1
       IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.struct'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'struct')
+          TokenTypes = 2
+        end>
+      NameFmt = '%s-1'
+      HighlightPos = cpAny
+      TreeItemImage = 4
+      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
@@ -946,7 +959,82 @@ object SyntAnal35: TLibSyntAnalyzer
     '      };'
     '   };'
     '};'
-    '')
+    ''
+    'struct mynewtrans like mytrans {'
+    '    do_pack(options : pack_options, l : *list of bit) is only {'
+    '        var l_tmp : list of bit;'
+    ''
+    '        if (empty == 0 or not options.reverse_list_items) {'
+    '            packing.pack_struct(me, options, l_tmp);'
+    '        } else {'
+    '            var l_last : list of bit;'
+    
+      '            l_last = pack(options, me.payload[me.payload.size()-' +
+      '1]);'
+    
+      '            l_tmp.add(l_last[0..((NUM_BYTES*8) - (me.empty*8) - ' +
+      '1)]);'
+    '            '
+    '            if (me.payload.size() > 1) {'
+    
+      '                l_tmp.add(pack(options, me.payload[0..me.payload' +
+      '.size()-2]));'
+    '            };'
+    '        };'
+    ''
+    '        l.add(l_tmp);'
+    '    };'
+    ''
+    
+      '    do_unpack(options : pack_options, l : list of bit, begin : i' +
+      'nt) : int is only {'
+    '        var l_tmp : list of bit;'
+    '        var low  : int;'
+    '        var high : int;'
+    ''
+    '        if (options.reverse_list_items) {'
+    '            low    = 0;'
+    '            high   = begin;'
+    '            result = low; // index of last bit unpacked'
+    '        } else {'
+    '            low    = begin;'
+    '            high   = l.size()-1;'
+    '            result = high;'
+    '        };'
+    '            '
+    '        l_tmp  = l[low..high];'
+    ''
+    '        options.final_reorder = {};'
+    '        options.scalar_reorder = {};'
+    ''
+    '        if (NUM_BYTES > 1) {'
+    '            empty = NUM_BYTES - (l_tmp.size()/8)%NUM_BYTES;'
+    '        } else {'
+    '            empty = 0;'
+    '        };'
+    ''
+    '        if (empty == 0 or not options.reverse_list_items) {'
+    '            unpack(options, l_tmp, payload);'
+    '        } else {'
+    '            var l_last : list of bit;'
+    '            var p_last : uint(bits: NUM_BYTES*8);'
+    '            var p_tmp  : list of uint(bits: NUM_BYTES*8);'
+    '            '
+    '            l_last = l_tmp[low .. low+(NUM_BYTES-empty)*8-1];'
+    '            unpack(options, l_last, p_last);'
+    ''
+    '            if (high - (low + (NUM_BYTES-empty)*8) > 0) {'
+    
+      '                unpack(options, l_tmp[low+(NUM_BYTES-empty)*8 ..' +
+      ' high], p_tmp);'
+    '                '
+    '                payload.add(p_tmp);'
+    '            };'
+    ''
+    '            payload.add(p_last);'
+    '        };'
+    '    };'
+    '};')
   TokenTypeNames.Strings = (
     'Symbol'
     'Id'
