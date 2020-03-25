@@ -1066,6 +1066,7 @@ object SyntAnal35: TLibSyntAnalyzer
     'String')
   Extentions = 'e'
   LexerName = 'Specman'
+  SkipSpaces = False
   Notes.Strings = (
     'By Oleh Lutsak, https://github.com/OlehL')
   LineComment = '//'
