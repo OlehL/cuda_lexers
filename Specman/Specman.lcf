@@ -825,8 +825,10 @@ object SyntAnal35: TLibSyntAnalyzer
             'unit')
           TokenTypes = 2
         end>
-      NameFmt = '%s-1'
+      BlockOffset = -2
+      NameFmt = '%sl-3'
       HighlightPos = cpBound
+      NoEndRule = True
       TreeItemImage = 1
       IgnoreAsParent = False
     end
@@ -838,8 +840,10 @@ object SyntAnal35: TLibSyntAnalyzer
             'struct')
           TokenTypes = 2
         end>
-      NameFmt = '%s-1'
+      BlockOffset = -2
+      NameFmt = '%s-0 %s-1'
       HighlightPos = cpAny
+      NoEndRule = True
       TreeItemImage = 4
       IgnoreAsParent = False
     end
@@ -853,6 +857,7 @@ object SyntAnal35: TLibSyntAnalyzer
         end>
       NameFmt = '%sl-6'
       HighlightPos = cpAny
+      NoEndRule = True
       TreeItemImage = 5
       IgnoreAsParent = False
     end>
