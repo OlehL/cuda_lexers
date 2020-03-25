@@ -1,4 +1,4 @@
-object SyntAnal54: TLibSyntAnalyzer
+object SyntAnal35: TLibSyntAnalyzer
   Formats = <
     item
       DisplayName = 'Number'
@@ -816,6 +816,19 @@ object SyntAnal54: TLibSyntAnalyzer
         end>
       HighlightPos = cpAny
       IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.unit'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'unit')
+          TokenTypes = 2
+        end>
+      NameFmt = '%s-1'
+      HighlightPos = cpBound
+      TreeItemImage = 1
+      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
@@ -908,6 +921,31 @@ object SyntAnal54: TLibSyntAnalyzer
     '     var s: string := l1.apply(it > 127 ? 1'#39'b1 : 1'#39'b0);'
     #39'>'
     ''
+    ' unit singleagent_flat_env_u like imc_base_env_u {'
+    '   static kind: env_kind_t = FLAT;'
+    '   // Environment configuration'
+    '   keep config.env_name == name;'
+    '};'
+    ''
+    
+      '// Define the environment unit and instantiate/hook-up the agent' +
+      's.'
+    '// Change active_passive, names as desired.'
+    ''
+    'unit singleagent_env_u like singleagent_flat_env_u {'
+    ''
+    '   // instantiate a default agent'
+    '   agent: agent default singleagent_agent_u is instance;'
+    '   keep agent.env_name == read_only(me.name);'
+    '   keep soft agent.active_passive == ACTIVE;'
+    ''
+    '   connect_pointers() is also {'
+    '      agent.env_p = me;'
+    '      if me::kind == FLAT {'
+    '         print me;'
+    '      };'
+    '   };'
+    '};'
     '')
   TokenTypeNames.Strings = (
     'Symbol'
