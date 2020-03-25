@@ -825,7 +825,6 @@ object SyntAnal35: TLibSyntAnalyzer
             'unit')
           TokenTypes = 2
         end>
-      BlockOffset = -2
       NameFmt = '%sl-3'
       HighlightPos = cpBound
       NoEndRule = True
@@ -840,7 +839,6 @@ object SyntAnal35: TLibSyntAnalyzer
             'struct')
           TokenTypes = 2
         end>
-      BlockOffset = -2
       NameFmt = '%s-0 %s-1'
       HighlightPos = cpAny
       NoEndRule = True
