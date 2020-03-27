@@ -140,10 +140,10 @@ object SyntAnal3: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
-      DisplayName = 'Quoted Identifier'
-      Enabled = False
+      DisplayName = 'Symbol { }'
+      StyleName = 'Symbol'
       TokenType = 8
-      Expression = '[`][a-z_]\w*'
+      Expression = '[\{\}]'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -151,7 +151,7 @@ object SyntAnal3: TLibSyntAnalyzer
       DisplayName = 'Single symbol'
       StyleName = 'Symbol'
       TokenType = 2
-      Expression = '[\{\}\(\)\[\],;\.\?]'
+      Expression = '[\(\)\[\],;\.\?]'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -171,15 +171,107 @@ object SyntAnal3: TLibSyntAnalyzer
     end>
   BlockRules = <
     item
+      DisplayName = 'codetree.service'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 256
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 21
+        end
+        item
+          TagList.Strings = (
+            'service')
+          TokenTypes = 1
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%s0 %s-1~[{]1'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      CollapseFmt = '%s-1~[{]1'
+      TreeItemImage = 3
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.type'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 256
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 1
+        end
+        item
+          TagList.Strings = (
+            'type')
+          TokenTypes = 1
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%s-1'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      TreeItemImage = 2
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.func'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'function')
+          TokenTypes = 1
+        end>
+      BlockOffset = -1
+      NameFmt = '%s-1'
+      HighlightPos = cpBound
+      CancelNextRules = True
+      NoEndRule = True
+      TreeItemImage = 5
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Tag block rule 1'
+      Enabled = False
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 29
+        end
+        item
+          TagList.Strings = (
+            'else'
+            'if')
+          TokenTypes = 1
+        end>
+      BlockEnd = '}'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      IgnoreAsParent = False
+    end
+    item
       DisplayName = '{'
       ConditionList = <
         item
           TagList.Strings = (
             '{')
-          TokenTypes = 4
+          TokenTypes = 256
         end>
       BlockEnd = '}'
-      EndOfTextClose = True
       DisplayInTree = False
       NameFmt = '%sz0'
       DynHighlight = dhBound
@@ -195,40 +287,9 @@ object SyntAnal3: TLibSyntAnalyzer
         item
           TagList.Strings = (
             '}')
-          TokenTypes = 4
+          TokenTypes = 256
         end>
       HighlightPos = cpBound
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'Type'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'type')
-          TokenTypes = 1
-        end>
-      BlockOffset = -1
-      NameFmt = '%s-1'
-      RefToCondEnd = True
-      HighlightPos = cpAny
-      NoEndRule = True
-      TreeItemImage = 2
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'Func'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'function')
-          TokenTypes = 1
-        end>
-      NameFmt = '%s-1'
-      RefToCondEnd = True
-      HighlightPos = cpBound
-      NoEndRule = True
-      TreeItemImage = 5
       IgnoreAsParent = False
     end
     item
@@ -472,7 +533,166 @@ object SyntAnal3: TLibSyntAnalyzer
     '125.54f'
     '123.'
     '.125e-2'
-    '0x121.58p-1')
+    '0x121.58p-1'
+    ''
+    ''
+    ''
+    ''
+    'service helloContinue on new http:Listener(9090) {'
+    '    @http:ResourceConfig {'
+    '        path: "/"'
+    '    }'
+    
+      '    resource function hello(http:Caller caller, http:Request req' +
+      'uest) {'
+    '        if (request.expects100Continue()) {'
+    '            if (request.hasHeader("X-Status")) {'
+    '                log:printInfo("Sending 100-Continue response");'
+    '                var responseError = caller->continue();'
+    '                if (responseError is error) {'
+    
+      '                    log:printError("Error sending response", res' +
+      'ponseError);'
+    '                }'
+    '            } else {'
+    
+      '                log:printInfo("Ignore payload by sending 417 res' +
+      'ponse");'
+    '                http:Response res = new;'
+    '                res.statusCode = 417;'
+    '                res.setPayload("Do not send me any payload");'
+    '                var responseError = caller->respond(res);'
+    '                if (responseError is error) {'
+    
+      '                    log:printError("Error sending response", res' +
+      'ponseError);'
+    '                }'
+    '                return;'
+    '            }'
+    '        }'
+    ''
+    '        http:Response res = new;'
+    '        var result  = request.getTextPayload();'
+    ''
+    '        if (result is string) {'
+    
+      '            var responseError = caller->respond(<@untainted> res' +
+      'ult);'
+    '            if (responseError is error) {'
+    
+      '                log:printError("Error sending response", respons' +
+      'eError);'
+    '            }'
+    '        } else {'
+    '            error err = result;'
+    '            res.statusCode = 500;'
+    '            res.setPayload(<@untainted> err.reason());'
+    
+      '            log:printError("Failed to retrieve payload from requ' +
+      'est: " + err.reason());'
+    '            var responseError = caller->respond(res);'
+    '            if (responseError is error) {'
+    
+      '                log:printError("Error sending response", respons' +
+      'eError);'
+    '            }'
+    '        }'
+    '    }'
+    ''
+    '    @http:ResourceConfig {'
+    '        methods: ["POST"]'
+    '    }'
+    
+      '    resource function getFormParam(http:Caller caller, http:Requ' +
+      'est req) {'
+    '        string replyMsg = "Result =";'
+    '        var bodyParts = req.getBodyParts();'
+    '        if (bodyParts is mime:Entity[]) {'
+    '            int i = 0;'
+    '            while (i < bodyParts.length()) {'
+    '                mime:Entity part = bodyParts[i];'
+    
+      '                mime:ContentDisposition contentDisposition = par' +
+      't.getContentDisposition();'
+    '                var result = part.getText();'
+    '                if (result is string) {'
+    
+      '                    replyMsg += " Key:" + contentDisposition.nam' +
+      'e + " Value: " + result;'
+    '                } else {'
+    
+      '                    replyMsg += <string> " Key:" + contentDispos' +
+      'ition.name + " Value: " + result.detail()["message"];'
+    '                }'
+    '                i += 1;'
+    '            }'
+    
+      '            var responseError = caller->respond(<@untainted> rep' +
+      'lyMsg);'
+    '            if (responseError is error) {'
+    '                error err = responseError;'
+    
+      '                log:printError(<string> err.detail()["message"],' +
+      ' responseError);'
+    '            }'
+    '        } else {'
+    '            error err = bodyParts;'
+    
+      '            log:printError(<string> err.detail()["message"], bod' +
+      'yParts);'
+    '        }'
+    '    }'
+    ''
+    
+      '    resource function testPassthrough(http:Caller caller, http:R' +
+      'equest req) {'
+    '        if (req.expects100Continue()) {'
+    '            req.removeHeader("Expect");'
+    '            var responseError = caller->continue();'
+    '            if (responseError is error) {'
+    
+      '                log:printError("Error sending response", respons' +
+      'eError);'
+    '            }'
+    '        }'
+    
+      '        var res = clientEndpoint->forward("/backend/hello", <@un' +
+      'tainted> req);'
+    '        if (res is http:Response) {'
+    '            var responseError = caller->respond(res);'
+    '            if (responseError is error) {'
+    
+      '                log:printError("Error sending response", respons' +
+      'eError);'
+    '            }'
+    '        } else {'
+    '            error err = res;'
+    
+      '            log:printError(<string> err.detail()["message"], res' +
+      ');'
+    '        }'
+    '    }'
+    '}'
+    'service backend on new http:Listener(9224) {'
+    
+      '    resource function hello(http:Caller caller, http:Request req' +
+      'uest) {'
+    '        http:Response response = new;'
+    '        var payload = request.getTextPayload();'
+    '        if (payload is string) {'
+    '            response.setTextPayload(<@untainted> payload);'
+    '        } else {'
+    '            error err = payload;'
+    '            response.setTextPayload(<@untainted> err.reason());'
+    '        }'
+    '        var responseError = caller->respond(response);'
+    '        if (responseError is error) {'
+    
+      '            log:printError("Error sending response", responseErr' +
+      'or);'
+    '        }'
+    '    }'
+    '}')
   TokenTypeNames.Strings = (
     'Id'
     'Comment'
@@ -482,9 +702,10 @@ object SyntAnal3: TLibSyntAnalyzer
     'Func'
     'Type'
     'Annotation'
-    'QIdentifer')
+    'Symbol {}')
   Extentions = 'bal'
   LexerName = 'Ballerina'
+  SkipSpaces = False
   Notes.Strings = (
     'By Oleh Lutsak, https://github.com/OlehL')
   ParseEndOfLine = True
