@@ -421,8 +421,10 @@ object SyntAnal3: TLibSyntAnalyzer
         item
           TagList.Strings = (
             'abstract'
+            'client'
             'private'
-            'public')
+            'public'
+            'remote')
           TokenTypes = 1
         end>
       HighlightPos = cpAny
