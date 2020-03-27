@@ -113,6 +113,22 @@ object SyntAnal35: TLibSyntAnalyzer
       Font.Style = []
     end
     item
+      DisplayName = 'Field.Ungenerated'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Field.Phisical'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
+    item
       DisplayName = 'Marked block'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clHighlightText
@@ -221,6 +237,22 @@ object SyntAnal35: TLibSyntAnalyzer
       DisplayName = 'code-symbol'
       StyleName = 'code-symbol'
       Expression = '<'#39'|'#39'>'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Field.Ungenerated'
+      StyleName = 'Field.Ungenerated'
+      TokenType = 5
+      Expression = '!\w+'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Field.Phisical'
+      StyleName = 'Field.Phisical'
+      TokenType = 5
+      Expression = '%\w+'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -1022,13 +1054,19 @@ object SyntAnal35: TLibSyntAnalyzer
     '   origin : ifx_irq_source;'
     '};'
     ''
+    'extend NESTED test {'
+    '    %n1    : nest;'
+    '    !n1    : nest;'
+    '};'
+    ''
     #39'>')
   TokenTypeNames.Strings = (
     'Symbol'
     'Id'
     'Number'
     'Comment'
-    'String')
+    'String'
+    'Field')
   Extentions = 'e'
   LexerName = 'Specman'
   SkipSpaces = False

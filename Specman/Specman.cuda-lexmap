@@ -19,4 +19,6 @@ String=String
 Symbol=Symbol
 Comment=Comment
 code-symbol=TagInclude
+Field.Ungenerated=TagId
+Field.Phisical=TagProp
 Marked block=-
