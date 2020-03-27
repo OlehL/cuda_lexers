@@ -156,16 +156,16 @@ object SyntAnal3: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
-      DisplayName = 'Id'
-      Expression = '[^`][a-z_]\w*'
-      ColumnFrom = 0
-      ColumnTo = 0
-    end
-    item
       DisplayName = 'Symbol'
       StyleName = 'Symbol'
       TokenType = 2
       Expression = '[/\+\-\*=<>&\|\^~!%\#]+'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Id'
+      Expression = '[^`][a-z_]\w*'
       ColumnFrom = 0
       ColumnTo = 0
     end>
@@ -237,30 +237,6 @@ object SyntAnal3: TLibSyntAnalyzer
       CancelNextRules = True
       NoEndRule = True
       TreeItemImage = 5
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'Tag block rule 1'
-      Enabled = False
-      ConditionList = <
-        item
-          TagList.Strings = (
-            '{')
-        end
-        item
-          CondType = tcSkip
-          TokenTypes = 29
-        end
-        item
-          TagList.Strings = (
-            'else'
-            'if')
-          TokenTypes = 1
-        end>
-      BlockEnd = '}'
-      RefToCondEnd = True
-      HighlightPos = cpAny
-      CancelNextRules = True
       IgnoreAsParent = False
     end
     item
