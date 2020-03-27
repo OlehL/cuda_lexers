@@ -871,6 +871,20 @@ object SyntAnal35: TLibSyntAnalyzer
       HighlightPos = cpAny
       NoEndRule = True
       IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.type'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'type')
+          TokenTypes = 2
+          IgnoreCase = True
+        end>
+      NameFmt = '%sl-1'
+      HighlightPos = cpAny
+      NoEndRule = True
+      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
