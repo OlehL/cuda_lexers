@@ -18,4 +18,5 @@ Id.keyword.preprocessor_directives=Id3
 String=String
 Symbol=Symbol
 Comment=Comment
+code-symbol=TagInclude
 Marked block=-

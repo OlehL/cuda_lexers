@@ -105,6 +105,14 @@ object SyntAnal35: TLibSyntAnalyzer
       Font.Style = [fsItalic]
     end
     item
+      DisplayName = 'code-symbol'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clYellow
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
+    item
       DisplayName = 'Marked block'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clHighlightText
@@ -206,6 +214,13 @@ object SyntAnal35: TLibSyntAnalyzer
       StyleName = 'Number'
       TokenType = 2
       Expression = '(\d+'#39'd)?\d[_0-9]*(k|K|m|M)?'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'code-symbol'
+      StyleName = 'code-symbol'
+      Expression = '<'#39'|'#39'>'
       ColumnFrom = 0
       ColumnTo = 0
     end
