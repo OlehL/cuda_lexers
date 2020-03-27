@@ -210,7 +210,9 @@ object SyntAnal3: TLibSyntAnalyzer
         end>
       BlockOffset = -1
       NameFmt = '%s-1'
+      RefToCondEnd = True
       HighlightPos = cpAny
+      NoEndRule = True
       TreeItemImage = 2
       IgnoreAsParent = False
     end
@@ -223,7 +225,9 @@ object SyntAnal3: TLibSyntAnalyzer
           TokenTypes = 1
         end>
       NameFmt = '%s-1'
+      RefToCondEnd = True
       HighlightPos = cpBound
+      NoEndRule = True
       TreeItemImage = 5
       IgnoreAsParent = False
     end
