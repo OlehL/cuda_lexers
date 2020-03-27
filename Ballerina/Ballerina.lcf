@@ -395,6 +395,7 @@ object SyntAnal3: TLibSyntAnalyzer
             'lengthof'
             'match'
             'next'
+            'on'
             'panic'
             'retries'
             'return'
