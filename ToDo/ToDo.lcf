@@ -1,4 +1,4 @@
-object SyntAnal57: TLibSyntAnalyzer
+object SyntAnal60: TLibSyntAnalyzer
   Formats = <
     item
       DisplayName = 'header'
@@ -32,14 +32,6 @@ object SyntAnal57: TLibSyntAnalyzer
       Font.Height = -13
       Font.Name = 'Courier New'
       Font.Style = [fsItalic]
-    end
-    item
-      DisplayName = '@tag'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -13
-      Font.Name = 'Courier New'
-      Font.Style = [fsBold]
     end
     item
       DisplayName = '@critical'
@@ -81,6 +73,14 @@ object SyntAnal57: TLibSyntAnalyzer
       DisplayName = '@timestamp'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clMaroon
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+    end
+    item
+      DisplayName = '@tag'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
       Font.Height = -13
       Font.Name = 'Courier New'
       Font.Style = [fsBold]
@@ -198,9 +198,7 @@ object SyntAnal57: TLibSyntAnalyzer
       DisplayName = '@tag'
       StyleName = '@tag'
       TokenType = 3
-      Expression = 
-        '(?<=\s)@(?!(high|today|critical|low|completed|done)[\s\(])[\w\d\' +
-        '.\(\)\-!? :\+]+[ \t]*'
+      Expression = '(?<=\s)@\S+\b'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -256,13 +254,13 @@ object SyntAnal57: TLibSyntAnalyzer
     ''
     ' New one:'
     '   - item4'
-    '   + item5'
-    '   [] item6'
-    '     [] item7'
+    '   + item5    dfd@dfsdf'
+    '   [] item6    @dfd'
+    '     [] item7      @'#1074#1072#1082#1074#1072#1077#1077
     '        + item   '
-    '          gdfgsd'
+    '          gdfgsd     '
     '   [] item'
-    '     [] item'
+    '     [] itemdfd@dfsdf'
     '     [] item  '
     ''
     'Priority:'
@@ -286,5 +284,7 @@ object SyntAnal57: TLibSyntAnalyzer
   Extentions = 'todo todolist taskpaper tasks'
   LexerName = 'ToDo'
   SkipSpaces = False
+  RestartFromLineStart = True
+  AlwaysSyncBlockAnal = True
   Charset = DEFAULT_CHARSET
 end
