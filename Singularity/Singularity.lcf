@@ -163,7 +163,7 @@ object SyntAnal34: TLibSyntAnalyzer
     'Comment'
     'Id.Header'
     '1Id.Section')
-  Extentions = 'Singularity'
+  Extentions = '/Singularity'
   LexerName = 'Singularity'
   SkipSpaces = False
   FullRefreshSize = 2000
