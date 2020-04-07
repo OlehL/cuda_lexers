@@ -244,7 +244,7 @@ object SyntAnal35: TLibSyntAnalyzer
       DisplayName = 'Field.Ungenerated'
       StyleName = 'Field.Ungenerated'
       TokenType = 5
-      Expression = '!\w+'
+      Expression = '(?<=\s)!\w+'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -252,7 +252,7 @@ object SyntAnal35: TLibSyntAnalyzer
       DisplayName = 'Field.Phisical'
       StyleName = 'Field.Phisical'
       TokenType = 5
-      Expression = '%\w+'
+      Expression = '(?<=\s)%\w+'
       ColumnFrom = 0
       ColumnTo = 0
     end
