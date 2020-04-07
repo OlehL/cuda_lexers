@@ -257,9 +257,17 @@ object SyntAnal35: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
+      DisplayName = 'Symbol { }'
+      StyleName = 'Symbol'
+      TokenType = 6
+      Expression = '[\{\}]'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
       DisplayName = 'Single symbol'
       StyleName = 'Symbol'
-      Expression = '[\{\}\(\)\[\],;\.\?]'
+      Expression = '[\(\)\[\],;\.\?]'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -305,12 +313,140 @@ object SyntAnal35: TLibSyntAnalyzer
       IgnoreAsParent = False
     end
     item
+      DisplayName = 'codetree.unit'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 64
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 39
+        end
+        item
+          TagList.Strings = (
+            'unit')
+          TokenTypes = 2
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%sl-1'
+      RefToCondEnd = True
+      HighlightPos = cpBound
+      CancelNextRules = True
+      TreeItemImage = 1
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.extend'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 64
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 39
+        end
+        item
+          TagList.Strings = (
+            'extend')
+          TokenTypes = 2
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%sl-1'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.struct'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 64
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 3
+        end
+        item
+          TagList.Strings = (
+            'struct')
+          TokenTypes = 2
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%s-0 %s-1'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      TreeItemImage = 4
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.define'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 64
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 39
+        end
+        item
+          TagList.Strings = (
+            'define')
+          TokenTypes = 2
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%sl-6'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      TreeItemImage = 5
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'codetree.type'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '{')
+          TokenTypes = 2
+        end
+        item
+          TokenTypes = 39
+        end
+        item
+          TagList.Strings = (
+            'type')
+          TokenTypes = 2
+          IgnoreCase = True
+        end>
+      BlockOffset = -1
+      BlockEnd = '}'
+      NameFmt = '%sl-1'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CancelNextRules = True
+      IgnoreAsParent = False
+    end
+    item
       DisplayName = '{'
       ConditionList = <
         item
           TagList.Strings = (
             '{')
-          TokenTypes = 1
+          TokenTypes = 64
         end>
       BlockEnd = '}'
       EndOfTextClose = True
@@ -329,7 +465,7 @@ object SyntAnal35: TLibSyntAnalyzer
         item
           TagList.Strings = (
             '}')
-          TokenTypes = 1
+          TokenTypes = 64
         end>
       HighlightPos = cpBound
       IgnoreAsParent = False
@@ -863,75 +999,6 @@ object SyntAnal35: TLibSyntAnalyzer
         end>
       HighlightPos = cpAny
       IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'codetree.unit'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'unit')
-          TokenTypes = 2
-        end>
-      NameFmt = '%sl-1'
-      HighlightPos = cpBound
-      NoEndRule = True
-      TreeItemImage = 1
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'codetree.struct'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'struct')
-          TokenTypes = 2
-        end>
-      NameFmt = '%s-0 %s-1'
-      HighlightPos = cpAny
-      NoEndRule = True
-      TreeItemImage = 4
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'codetree.define'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'define')
-          TokenTypes = 2
-        end>
-      NameFmt = '%sl-6'
-      HighlightPos = cpAny
-      NoEndRule = True
-      TreeItemImage = 5
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'codetree.extend'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'extend')
-          TokenTypes = 2
-        end>
-      NameFmt = '%sl-1'
-      HighlightPos = cpAny
-      NoEndRule = True
-      IgnoreAsParent = False
-    end
-    item
-      DisplayName = 'codetree.type'
-      ConditionList = <
-        item
-          TagList.Strings = (
-            'type')
-          TokenTypes = 2
-          IgnoreCase = True
-        end>
-      NameFmt = '%sl-1'
-      HighlightPos = cpAny
-      NoEndRule = True
-      IgnoreAsParent = False
     end>
   CodeTemplates = <>
   SubAnalyzers = <>
@@ -1066,7 +1133,8 @@ object SyntAnal35: TLibSyntAnalyzer
     'Number'
     'Comment'
     'String'
-    'Field')
+    'Field'
+    'Symbol {}')
   Extentions = 'e'
   LexerName = 'Specman'
   SkipSpaces = False
