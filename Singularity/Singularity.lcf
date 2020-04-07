@@ -39,7 +39,7 @@ object SyntAnal34: TLibSyntAnalyzer
     item
       DisplayName = 'Comment'
       StyleName = 'Comment'
-      Expression = '\#.*'
+      Expression = '\#.*$'
       ColumnFrom = 0
       ColumnTo = 0
     end
@@ -52,28 +52,27 @@ object SyntAnal34: TLibSyntAnalyzer
       ColumnTo = 0
     end
     item
-      DisplayName = '1Id.Section'
+      DisplayName = '1st Section'
       StyleName = 'Id.Section'
       TokenType = 2
       Expression = '^%\w+'
       ColumnFrom = 0
       ColumnTo = 0
+    end
+    item
+      DisplayName = '1st Item'
+      TokenType = 3
+      Expression = '^[\x20\x09]*.+'
+      ColumnFrom = 0
+      ColumnTo = 0
     end>
   BlockRules = <
     item
-      DisplayName = 'Id.Header'
+      DisplayName = 'Header'
       StyleName = 'Id.Header'
       BlockType = btTagDetect
       ConditionList = <
         item
-          TagList.Strings = (
-            'Bootstrap'
-            'From'
-            'Include'
-            'Library'
-            'MirrorURL'
-            'OSVersion'
-            'Stage')
           TokenTypes = 2
         end>
       NameFmt = '%s0'
@@ -90,6 +89,7 @@ object SyntAnal34: TLibSyntAnalyzer
       EndOfTextClose = True
       NameFmt = '%sz0'
       HighlightPos = cpAny
+      DrawStaple = True
       GroupIndex = 20
       CollapseFmt = '%s0'
       SelfClose = True
@@ -101,11 +101,8 @@ object SyntAnal34: TLibSyntAnalyzer
       DisplayName = 'Bash'
       BlockName = 'Section'
       StartExpression = '^[\x20\x09]+'
-      EndExpression = 
-        '^\%(files|labels|help|environment|post|runscript|setup|startscri' +
-        'pt|test)\b'
+      EndExpression = '^%\w+\b'
       SyntAnalyzer = SyntAnal4
-      ToTextEnd = True
     end>
   SampleText.Strings = (
     '# SYNTAX TEST "Singularity.sublime-syntax"'
@@ -162,8 +159,9 @@ object SyntAnal34: TLibSyntAnalyzer
   TokenTypeNames.Strings = (
     'Comment'
     'Id.Header'
-    '1Id.Section')
-  Extentions = '/Singularity'
+    '1st Section'
+    '1st Item')
+  Extentions = '/singularity'
   LexerName = 'Singularity'
   SkipSpaces = False
   FullRefreshSize = 2000
