@@ -47,7 +47,7 @@ object SyntAnal34: TLibSyntAnalyzer
       DisplayName = 'Id.Header'
       StyleName = 'Id.Header'
       TokenType = 1
-      Expression = '^[\x20\x09]*\w+[^:]'
+      Expression = '^[\x20\x09]*\w+:'
       ColumnFrom = 0
       ColumnTo = 0
     end
