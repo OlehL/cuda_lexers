@@ -1,0 +1,17 @@
+[comments]
+str1="
+str2="
+styles_cmt=
+styles_str=
+full1=#
+
+[map]
+Comment=Comment
+Header=IdKeyword
+Number=Number
+Symbol=Symbol
+Id function=Id2
+Error=-
+String=String
+good=-
+bad=-

@@ -1,0 +1,259 @@
+object SyntAnal41: TLibSyntAnalyzer
+  Formats = <
+    item
+      DisplayName = 'Comment'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGreen
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsItalic]
+      BgColor = clSilver
+    end
+    item
+      DisplayName = 'Header'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+      BgColor = clMoneyGreen
+    end
+    item
+      DisplayName = 'Number'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+    end
+    item
+      DisplayName = 'Symbol'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+    end
+    item
+      DisplayName = 'Id function'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clPurple
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Error'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsItalic]
+    end
+    item
+      DisplayName = 'String'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clTeal
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'good'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clLime
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+    end
+    item
+      DisplayName = 'bad'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
+    end>
+  TokenRules = <
+    item
+      DisplayName = '^Comment'
+      Enabled = False
+      StyleName = 'Comment'
+      Expression = '^[\x20\x09]* \#.*'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = '^Header'
+      StyleName = 'Header'
+      TokenType = 1
+      Expression = '\S+.+?:[\x20\x09]*$'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Comment'
+      StyleName = 'Comment'
+      TokenType = 6
+      Expression = '\#.*'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Error'
+      StyleName = 'Error'
+      TokenType = 6
+      Expression = 'error:.*?[^\x20\x09]*'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'String """'
+      StyleName = 'String'
+      TokenType = 7
+      Expression = '(?s) [rbuf]? ("""|'#39#39#39') .*? (\1|\Z)'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'String'
+      StyleName = 'String'
+      TokenType = 7
+      Expression = '(b|u|f)? ("|'#39') (\\.|.)*? (\2|$)'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Symbol single'
+      StyleName = 'Symbol'
+      TokenType = 3
+      Expression = '[\(\)\[\]\{\}]'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Symbol'
+      StyleName = 'Symbol'
+      TokenType = 3
+      Expression = '[/\*=<>\+\-\^\x{b2}\x{b3}%\|~&]+|(?<=[0-9])\.(?=[0-9])'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Int/float'
+      StyleName = 'Number'
+      TokenType = 2
+      Expression = '\b(\d+\.?\d*[eE][-+]?\d+\.?\d*|\d+\.\d+|\d*)\b'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Id func'
+      StyleName = 'Id function'
+      TokenType = 5
+      Expression = 
+        '\b(Pi|E|IF|AND|OR|NOT|max|min|mid|sum|deg|rad|pow|sqrt|rt|cos|co' +
+        'sec|acos|sin|sec|asin|tan|tg|ctg|atan|exp|log|log10|lg|ln|hypot|' +
+        'abs|roundup|rounddown|round|rnd)\b'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'good'
+      StyleName = 'good'
+      TokenType = 8
+      Expression = 'True'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'bad'
+      StyleName = 'bad'
+      TokenType = 8
+      Expression = 'False'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end>
+  BlockRules = <
+    item
+      DisplayName = 'head'
+      ConditionList = <
+        item
+          TokenTypes = 2
+        end>
+      EndOfTextClose = True
+      NameFmt = '%sz0'
+      HighlightPos = cpAny
+      DrawStaple = True
+      GroupIndex = 20
+      CollapseFmt = '%sz0 {...}'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'items'
+      Enabled = False
+      ConditionList = <
+        item
+          TokenTypes = 17
+        end>
+      EndOfTextClose = True
+      DisplayInTree = False
+      NameFmt = '%sz0'
+      HighlightPos = cpAny
+      DrawStaple = True
+      GroupIndex = 20
+      CollapseFmt = '%sz0 {...}'
+      IgnoreAsParent = False
+    end>
+  CodeTemplates = <>
+  SubAnalyzers = <>
+  SampleText.Strings = (
+    #1047#1041#1030#1056' '#1053#1040#1042#1040#1053#1058#1040#1046#1045#1053#1068':'
+    '  '#1057#1090#1110#1085#1072':'
+    '    # - '#1089#1077#1085#1076#1074#1110#1095' '#1087#1072#1085#1077#1083#1100' '#1079#1072#1087#1086#1074#1085#1077#1085#1072' '#1084#1110#1085'. '#1074#1072#1090#1086#1102' ?=110 '#1082#1075'/'#1084'? t=120'
+    '    '#1057#1090#1110#1085#1072'=(2*0.8/1000*7850+t/1000*?)*1.1*1.1=31.1696 '#1082#1075'/'#1084'?'
+    ''
+    '  # '#1055#1086#1082#1088#1110#1074#1083#1103':'
+    
+      '    - '#1055#1042#1061' Sikaplan t=1.5 '#1084#1084'                             n1=2.5*1' +
+      '.1 '#1082#1075'/'#1084'?'
+    
+      '    - '#1052#1110#1085#1077#1088#1072#1083#1100#1085#1072' '#1074#1072#1090#1072' ?=180 '#1082#1075'/'#1084'? - t=40 '#1084#1084'             n2=t/100' +
+      '0*?*1.3=9.36 '#1082#1075'/'#1084'?'
+    
+      '    - '#1052#1110#1085#1077#1088#1072#1083#1100#1085#1072' '#1074#1072#1090#1072' ?=110 '#1082#1075'/'#1084'? - t=80 '#1084#1084'             n3=t/100' +
+      '0*?*1.3=11.44 '#1082#1075'/'#1084'?'
+    
+      '    - '#1055#1072#1088#1086#1110#1079#1086#1083#1103#1094#1110#1081#1085#1072' '#1087#1083#1110#1074#1082#1072' ?=1000 '#1082#1075'/'#1084'? t=0.3 '#1084#1084'       n4=t/100' +
+      '0*?*1.1=0.33 '#1082#1075'/'#1084'?'
+    
+      '    - '#1053#1077#1089#1091#1095#1080#1081' '#1087#1088#1086#1092#1083#1080#1089#1090' t=150 '#1084#1084'                         n5=15.1*' +
+      '1.1 '#1082#1075'/'#1084'?'
+    '    '#1055#1086#1082#1088#1110#1074#1083#1103'=sum(n1,n2,n3,n4,n5)*1.1=44.539 '#1082#1075'/'#1084'?'
+    
+      'F=2*Rbt*ho/?*sum((bcol+ce2)*ho/c1,(hcol+c1)*ho/c2)=error:_name_'#39 +
+      'ce2'#39'_is_not_defined '#1082#1075
+    ''
+    '"""'
+    #9#1055#1110#1076#1073#1110#1088' '#1072#1088#1084#1072#1090#1091#1088#1080' '#1074#1080#1082#1086#1085#1072#1085#1086' '#1079#1075#1110#1076#1085#1086' '#1087'. 3.18'
+    
+      #9#1055#1086#1089#1086#1073#1080#1108' '#1087#1086' '#1087#1088#1086#1077#1082#1090#1080#1088#1086#1074#1072#1085#1080#1102' '#1073#1077#1090#1086#1085#1085#1099#1093' '#1080' '#1078#1077#1083#1077#1079#1086#1073#1077#1090#1086#1085#1085#1099#1093' '#1082#1086#1085#1089#1090#1088#1091#1082#1094#1080#1081 +
+      '('#1082' '#1057#1053#1080#1055' 2.03.01-84)'
+    #9'"""'
+    ' Q<=Qmax=True')
+  TokenTypeNames.Strings = (
+    '^Comment'
+    '^Head'
+    'Number'
+    'Symbol'
+    '^Item'
+    'ID'
+    'Comment'
+    'String'
+    'tag')
+  Extentions = 'math'
+  LexerName = 'Math'
+  SkipSpaces = False
+  LineComment = '# '
+  Charset = DEFAULT_CHARSET
+end
